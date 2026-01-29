@@ -7,11 +7,18 @@ from datetime import datetime
 app = FastAPI(title="Chatbot Lead Capture API")
 
 
-# ✅ ADD THIS HERE (health check route)
+
 @app.get("/")
 def health_check():
     return {"status": "API is running"}
 
+@app.post("/api/chatbot/debug")
+async def debug(request: Request):
+    print("DEBUG HIT")
+    print("HEADERS:", dict(request.headers))
+    body = await request.body()
+    print("BODY:", body)
+    return {"ok": True}
 
 class LeadRequest(BaseModel):
     is_owner: bool
