@@ -1,5 +1,5 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, HttpUrl, Field
+from fastapi import FastAPI, HTTPException, Request
+from pydantic import BaseModel, HttpUrl
 from typing import Optional
 from uuid import uuid4
 from datetime import datetime
@@ -7,10 +7,10 @@ from datetime import datetime
 app = FastAPI(title="Chatbot Lead Capture API")
 
 
-
 @app.get("/")
 def health_check():
     return {"status": "API is running"}
+
 
 @app.post("/api/chatbot/debug")
 async def debug(request: Request):
@@ -19,6 +19,7 @@ async def debug(request: Request):
     body = await request.body()
     print("BODY:", body)
     return {"ok": True}
+
 
 class LeadRequest(BaseModel):
     is_owner: bool
