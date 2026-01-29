@@ -7,6 +7,12 @@ from datetime import datetime
 app = FastAPI(title="Chatbot Lead Capture API")
 
 
+# ✅ ADD THIS HERE (health check route)
+@app.get("/")
+def health_check():
+    return {"status": "API is running"}
+
+
 class LeadRequest(BaseModel):
     is_owner: bool
     speciality: Optional[str] = None
@@ -14,21 +20,10 @@ class LeadRequest(BaseModel):
     full_name: str
     website: Optional[HttpUrl] = None
     preferred_contact_time: Optional[str] = None
-    
-    monthly_appointments: Optional[int] = Field(
-        None, description="How many appointments can your clinic handle in a month?"
-    )
-    average_ticket_size: Optional[float] = Field(
-        None, description="What is your average ticket size (treatment cost)?"
-    )
-    ad_budget: Optional[float] = Field(
-        None, description="How much are you ready to invest in advertisements for acquiring new patients?"
-    )
-
-    # New field
-    implementation_timeline: Optional[str] = Field(
-        None, description="How soon would you like to begin implementing the digital patient acquisition solution to start generating new patients?"
-    )
+    monthly_appointments: Optional[int] = None
+    average_ticket_size: Optional[float] = None
+    ad_budget: Optional[float] = None
+    implementation_timeline: Optional[str] = None
 
 
 class LeadResponse(BaseModel):
